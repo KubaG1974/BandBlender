@@ -1,6 +1,17 @@
-namespace BandBlender.Data;
+using BandBlender.Models;
+using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext
+namespace BandBlender.Data
 {
-    
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Band> Bands { get; set; }
+        public DbSet<Musician> Musicians { get; set; }
+    }
 }
