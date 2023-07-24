@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BandBlender.Models;
+using BandBlender.Data;
 
 namespace BandBlender
 {
