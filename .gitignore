@@ -1,5 +1,11 @@
-bin/
+# .gitignore for C# ASP.NET Core projects
 obj/
-/packages/
-riderModule.iml
-/_ReSharper.Caches/
+bin/
+.vs/
+.idea/
+.vscode/
+*.userprefs
+*.suo
+*.user
+*.sln.docstates
+BBFront/
