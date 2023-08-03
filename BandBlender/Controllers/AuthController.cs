@@ -18,7 +18,7 @@ public class AuthController : ControllerBase
         // here, you would usually authenticate the user credentials first
         // if they are valid, generate and return a JWT
 
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSuperSecureKey"));
+        var secretKey = new SymmetricSecurityKey("YourSuperSecureKey"u8.ToArray());
         var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
         var tokenOptions = new JwtSecurityToken(

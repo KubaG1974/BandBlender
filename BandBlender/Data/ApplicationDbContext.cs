@@ -10,8 +10,8 @@ namespace BandBlender.Data
         {
         }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<Band> Bands { get; set; }
-        public DbSet<Musician> Musicians { get; set; }
+        public DbSet<ApplicationUser>? ApplicationUsers { get; set; }
+        public DbSet<Band>? Bands { get; set; }
+        public DbSet<Musician>? Musicians { get; set; }
     }
 }
