@@ -1,4 +1,4 @@
-namespace BandBlender.DTOs;
+namespace BandBlender.Models.DTOs;
 
 public class UserForAuthenticationDto
 {
