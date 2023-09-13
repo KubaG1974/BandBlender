@@ -12,7 +12,7 @@ namespace BandBlender.Controllers;
 public class AuthController : ControllerBase
 {
     [HttpPost]
-    public IActionResult Login(UserForAuthenticationDto userForAuth)
+    public IActionResult Login(UserRegistrationDto userForAuth)
     {
         // here, you would usually authenticate the user credentials first
         // if they are valid, generate and return a JWT
