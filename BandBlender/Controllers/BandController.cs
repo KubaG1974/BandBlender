@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using BandBlender.Data;
 using BandBlender.Models;
 
@@ -20,7 +19,7 @@ namespace BandBlender.Controllers
         [HttpPost]
         public async Task<ActionResult<Band>> CreateBand(Band band)
         {
-            _context.Bands.Add(band);
+            if (_context.Bands != null) _context.Bands.Add(band);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetBand), new { id = band.BandId }, band);
@@ -28,21 +27,26 @@ namespace BandBlender.Controllers
 
         // GET: api/Band/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Band>> GetBand(int id)
+        public async Task<ActionResult<Band>?> GetBand(Guid id)
         {
-            var band = await _context.Bands.FindAsync(id);
-
-            if (band == null)
+            if (_context.Bands != null)
             {
-                return NotFound();
+                var band = await _context.Bands.FindAsync(id);
+
+                if (band == null)
+                {
+                    return NotFound();
+                }
+
+                return band;
             }
 
-            return band;
+            return null;
         }
 
         // PUT: api/Band/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBand(int id, Band band)
+        public async Task<IActionResult> UpdateBand(Guid id, Band band)
         {
             if (id != band.BandId)
             {
@@ -74,21 +78,25 @@ namespace BandBlender.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBand(int id)
         {
-            var band = await _context.Bands.FindAsync(id);
-            if (band == null)
+            if (_context.Bands != null)
             {
-                return NotFound();
+                var band = await _context.Bands.FindAsync(id);
+                if (band == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Bands.Remove(band);
             }
 
-            _context.Bands.Remove(band);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool BandExists(int id)
+        private bool BandExists(Guid id)
         {
-            return _context.Bands.Any(e => e.BandId == id);
+            return _context.Bands != null && _context.Bands.Any(e => e.BandId == id);
         }
     }
 }
