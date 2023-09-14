@@ -1,4 +1,4 @@
-namespace BandBlender.Middleware;
+namespace BandBlender.Middlewares;
 
 public class JwtMiddleware
 {
