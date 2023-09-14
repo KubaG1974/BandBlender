@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BandBlender.Controllers;
 
-[Microsoft.AspNetCore.Components.Route("api/[controller]")]
+//[Microsoft.AspNetCore.Components.Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     [HttpPost]
