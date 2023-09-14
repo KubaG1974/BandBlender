@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BandBlender.Controllers;
 
-//[Microsoft.AspNetCore.Components.Route("api/[controller]")]
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
@@ -24,8 +23,8 @@ public class AuthController : ControllerBase
         var tokenOptions = new JwtSecurityToken(
             issuer: "http://localhost:5000",
             audience: "http://localhost:5000",
-            claims: new List<Claim>(), // you could add some user-specific claims here
-            expires: DateTime.Now.AddMinutes(30), // token expiration time
+            claims: new List<Claim>(), 
+            expires: DateTime.Now.AddMinutes(30), 
             signingCredentials: signinCredentials
         );
 

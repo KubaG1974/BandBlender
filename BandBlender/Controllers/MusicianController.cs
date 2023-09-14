@@ -1,58 +1,82 @@
-using BandBlender.Models.DTOs.Musician;
-using BandBlender.Services;
 using Microsoft.AspNetCore.Mvc;
+using BandBlender.Services;
+using BandBlender.Models;
+using BandBlender.Models.DTOs.Musician;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BandBlender.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class MusicianController : ControllerBase
     {
-        private readonly MusicianService _musicianService;
+        private readonly IMusicianService _musicianService;
 
-        public MusicianController(MusicianService musicianService)
+        public MusicianController(IMusicianService musicianService)
         {
             _musicianService = musicianService;
         }
 
-        // GET: api/Musician
         [HttpGet]
-        public IActionResult GetMusicians()
+        public async Task<ActionResult<IEnumerable<MusicianReadDto>>> GetAllMusicians()
         {
-            // Implementation here...
-            return Ok();
+            var musicians = await _musicianService.GetAllMusicians();
+            return Ok(musicians);
         }
 
-        // GET: api/Musician/5
-        [HttpGet("{id}", Name = "GetMusician")]
-        public IActionResult GetMusician(Guid id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MusicianReadDto>> GetMusicianById(Guid id)
         {
-            // Implementation here...
-            return Ok();
+            var musician = await _musicianService.GetMusicianById(id);
+
+            if (musician == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(musician);
         }
 
-        // POST: api/Musician
         [HttpPost]
-        public IActionResult CreateMusician(MusicianCreateDto musicianCreateDto)
+        public async Task<ActionResult<MusicianReadDto>> CreateMusician(MusicianCreateDto musicianCreateDto)
         {
-            // Implementation here...
-            return Ok();
+            var musicianId = await _musicianService.CreateMusician(musicianCreateDto);
+
+            var musician = await _musicianService.GetMusicianById(musicianId);
+
+            return CreatedAtAction(nameof(GetMusicianById), new { id = musicianId }, musician);
         }
 
-        // PUT: api/Musician/5
         [HttpPut("{id}")]
-        public IActionResult UpdateMusician(Guid id, MusicianUpdateDto musicianUpdateDto)
+        public async Task<ActionResult> UpdateMusician(Guid id, MusicianUpdateDto musicianUpdateDto)
         {
-            // Implementation here...
-            return Ok();
+            var existingMusician = await _musicianService.GetMusicianById(id);
+
+            if (existingMusician == null)
+            {
+                return NotFound();
+            }
+
+            await _musicianService.UpdateMusician(id, musicianUpdateDto);
+
+            return NoContent();
         }
 
-        // DELETE: api/Musician/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteMusician(Guid id)
+        public async Task<ActionResult> DeleteMusician(Guid id)
         {
-            // Implementation here...
-            return Ok();
+            var existingMusician = await _musicianService.GetMusicianById(id);
+
+            if (existingMusician == null)
+            {
+                return NotFound();
+            }
+
+            await _musicianService.DeleteMusician(id);
+
+            return NoContent();
         }
     }
 }
