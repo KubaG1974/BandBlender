@@ -1,10 +1,12 @@
 using BandBlender.Data;
+using BandBlender.Models.DTOs.Band;
 using BandBlender.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace BandBlender.Services
 {
-    public class BandService
+    public class BandService : IBandService
     {
         private readonly ApplicationDbContext _context;
 
@@ -13,39 +15,94 @@ namespace BandBlender.Services
             _context = context;
         }
 
-        public async Task<List<Band>> GetBandsAsync()
+        public async Task<IEnumerable<BandReadDto>> GetAllBands()
         {
-            return await (_context.Bands ?? throw new InvalidOperationException()).Include(b => b.Genre).ToListAsync();
+            var bands = await (_context.Bands ?? throw new InvalidOperationException()).AsNoTracking()
+                .Include(b => b.MusicianList)
+                .Include(b => b.Genre)
+                .Select(b => new BandReadDto
+                {
+                    BandId = b.BandId,
+                    BandName = b.BandName,
+                    City = b.City,
+                    Genre = b.Genre,
+                    Biography = b.Biography,
+                    Video = b.Video,
+                    Demo = b.Demo,
+                    MusicianList = b.MusicianList!.ToList()
+                })
+                .ToListAsync<BandReadDto>();
+
+            return bands;
         }
 
-        public async Task<Band?> GetBandByIdAsync(Guid id)
+        public async Task<BandReadDto> GetBandById(Guid id)
         {
-            return await (_context.Bands ?? throw new InvalidOperationException()).Include(b => b.Genre).FirstOrDefaultAsync(b => b.BandId == id);
+            var band = await (_context.Bands ?? throw new InvalidOperationException()).AsNoTracking()
+                .Include(b => b.MusicianList)
+                .Include(b => b.Genre)
+                .Where(b => b.BandId == id)
+                .Select(b => new BandReadDto
+                {
+                    BandId = b.BandId,
+                    BandName = b.BandName,
+                    City = b.City,
+                    Genre = b.Genre,
+                    Biography = b.Biography,
+                    Video = b.Video,
+                    Demo = b.Demo,
+                    MusicianList = b.MusicianList!.ToList()
+                })
+                .FirstOrDefaultAsync();
+
+
+            return band;
         }
 
-        public async Task CreateBandAsync(Band band)
+        public async Task<Guid> CreateBand(BandCreateDto bandCreateDto)
         {
-            if(band == null)
+            var band = new Band
             {
-                throw new ArgumentNullException(nameof(band));
-            }
+                BandName = bandCreateDto.BandName,
+                City = bandCreateDto.City,
+                Genre = bandCreateDto.GenreId,
+                Biography = bandCreateDto.Biography,
+                Video = bandCreateDto.Video,
+                Demo = bandCreateDto.Demo
+            };
 
             if (_context.Bands != null) await _context.Bands.AddAsync(band);
             await _context.SaveChangesAsync();
+
+            return band.BandId;
         }
 
-        public async Task UpdateBandAsync(Band band)
-        {
-            _context.Bands?.Update(band);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteBandAsync(Guid id)
+        public async Task UpdateBand(Guid id, BandUpdateDto bandUpdateDto)
         {
             if (_context.Bands != null)
             {
                 var band = await _context.Bands.FindAsync(id);
-                if (band != null)
+                if(band != null)
+                {
+                    band.BandName = bandUpdateDto.BandName;
+                    band.City = bandUpdateDto.City;
+                    band.Genre = bandUpdateDto.Genre;
+                    band.Biography = bandUpdateDto.Biography;
+                    band.Video = bandUpdateDto.Video;
+                    band.Demo = bandUpdateDto.Demo;
+
+                    _context.Bands.Update(band);
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async Task DeleteBand(Guid id)
+        {
+            if (_context.Bands != null)
+            {
+                var band = await _context.Bands.FindAsync(id);
+                if(band != null)
                 {
                     _context.Bands.Remove(band);
                     await _context.SaveChangesAsync();

@@ -20,6 +20,8 @@ namespace BandBlender
         {
             services.AddScoped<BandService>();
             
+            services.AddScoped<IBandService, BandService>();
+            
             services.AddScoped<MusicianService>();
             
             services.AddTransient<IMusicianService, MusicianService>();

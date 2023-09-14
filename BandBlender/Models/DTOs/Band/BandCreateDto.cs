@@ -21,9 +21,9 @@ namespace BandBlender.Models.DTOs.Band
         public string? Biography { get; set; }
 
         [MaxLength(200)]
-        public string? VideoUrl { get; set; }
+        public string? Video { get; set; }
 
         [MaxLength(200)]
-        public string? DemoUrl { get; set; }
+        public string? Demo { get; set; }
     }
 }

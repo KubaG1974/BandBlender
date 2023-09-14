@@ -3,13 +3,14 @@ namespace BandBlender.Models
     public class Band
     {
         public Guid BandId { get; set; }
-        public string? Name { get; set; }
+        public string? BandName { get; set; }
         public string? City { get; set; }
-        public Genre? Genre { get; set; }
-        public List<Musician>? Musicians { get; set; } = new List<Musician>();
+        public Guid Genre { get; set; } 
         public string? Biography { get; set; }
-        public string? VideoUrl { get; set; }
-        public string? DemoUrl { get; set; }
+        public string? Video { get; set; }
+        public string? Demo { get; set; }
+        public List<string>? MusicianList { get; set; }
     }
+
     
 }

@@ -13,7 +13,7 @@ namespace BandBlender.Models.DTOs.Band
         public string? City { get; set; }
 
         [Required]
-        public Guid GenreId { get; set; }
+        public Guid Genre { get; set; }
 
         public List<Guid>? MusicianIds { get; set; }
 
@@ -21,9 +21,9 @@ namespace BandBlender.Models.DTOs.Band
         public string? Biography { get; set; }
 
         [MaxLength(200)]
-        public string? VideoUrl { get; set; }
+        public string? Video { get; set; }
 
         [MaxLength(200)]
-        public string? DemoUrl { get; set; }
+        public string? Demo { get; set; }
     }
 }
