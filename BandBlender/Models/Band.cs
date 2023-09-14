@@ -2,8 +2,14 @@ namespace BandBlender.Models
 {
     public class Band
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        // pozostałe pola do ustalenia
+        public int BandId { get; set; }
+        public string Name { get; set; }
+        public string City { get; set; }
+        public Genre Genre { get; set; }
+        public List<Musician> Musicians { get; set; } = new List<Musician>();
+        public string Biography { get; set; }
+        public string VideoUrl { get; set; }
+        public string DemoUrl { get; set; }
     }
+    
 }
