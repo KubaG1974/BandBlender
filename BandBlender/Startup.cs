@@ -1,5 +1,6 @@
 using System.Text;
 using BandBlender.Data;
+using BandBlender.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +18,10 @@ namespace BandBlender
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<BandService>();
+            
+            services.AddScoped<MusicianService>();
+            
             services.AddControllers();
 
             services.AddDbContext<ApplicationDbContext>(options =>
