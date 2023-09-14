@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using BandBlender.Services;
-using BandBlender.Models;
 using BandBlender.Models.DTOs.Musician;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BandBlender.Controllers
 {
@@ -30,11 +26,6 @@ namespace BandBlender.Controllers
         public async Task<ActionResult<MusicianReadDto>> GetMusicianById(Guid id)
         {
             var musician = await _musicianService.GetMusicianById(id);
-
-            if (musician == null)
-            {
-                return NotFound();
-            }
 
             return Ok(musician);
         }
