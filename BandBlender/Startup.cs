@@ -22,6 +22,8 @@ namespace BandBlender
             
             services.AddScoped<MusicianService>();
             
+            services.AddTransient<IMusicianService, MusicianService>();
+            
             services.AddControllers();
 
             services.AddDbContext<ApplicationDbContext>(options =>

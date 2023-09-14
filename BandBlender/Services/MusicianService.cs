@@ -1,6 +1,6 @@
 namespace BandBlender.Services;
 
-public class MusicianService
+public class MusicianService : IMusicianService
 {
     
 }
