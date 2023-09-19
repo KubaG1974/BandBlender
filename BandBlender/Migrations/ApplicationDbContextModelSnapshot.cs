@@ -48,27 +48,28 @@ namespace BandBlender.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("BandName")
+                        .HasColumnType("text");
+
                     b.Property<string>("Biography")
                         .HasColumnType("text");
 
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<string>("DemoUrl")
+                    b.Property<string>("Demo")
                         .HasColumnType("text");
 
-                    b.Property<int?>("GenreId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("Genre")
+                        .HasColumnType("uuid");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
+                    b.Property<List<string>>("MusicianList")
+                        .HasColumnType("text[]");
 
-                    b.Property<string>("VideoUrl")
+                    b.Property<string>("Video")
                         .HasColumnType("text");
 
                     b.HasKey("BandId");
-
-                    b.HasIndex("GenreId");
 
                     b.ToTable("Bands");
                 });
@@ -93,9 +94,6 @@ namespace BandBlender.Migrations
                 {
                     b.Property<Guid>("MusicianId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("BandId")
                         .HasColumnType("uuid");
 
                     b.Property<List<Guid>>("BandIds")
@@ -128,30 +126,7 @@ namespace BandBlender.Migrations
 
                     b.HasKey("MusicianId");
 
-                    b.HasIndex("BandId");
-
                     b.ToTable("Musicians");
-                });
-
-            modelBuilder.Entity("BandBlender.Models.Band", b =>
-                {
-                    b.HasOne("BandBlender.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
-
-                    b.Navigation("Genre");
-                });
-
-            modelBuilder.Entity("BandBlender.Models.Musician", b =>
-                {
-                    b.HasOne("BandBlender.Models.Band", null)
-                        .WithMany("Musicians")
-                        .HasForeignKey("BandId");
-                });
-
-            modelBuilder.Entity("BandBlender.Models.Band", b =>
-                {
-                    b.Navigation("Musicians");
                 });
 #pragma warning restore 612, 618
         }
