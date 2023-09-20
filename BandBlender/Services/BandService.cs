@@ -36,7 +36,7 @@ namespace BandBlender.Services
             return bands;
         }
 
-        public async Task<BandReadDto> GetBandById(Guid id)
+        public async Task<BandReadDto?> GetBandById(Guid id)
         {
             var band = await (_context.Bands ?? throw new InvalidOperationException()).AsNoTracking()
                 .Include(b => b.MusicianList)
