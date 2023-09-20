@@ -14,7 +14,7 @@ namespace BandBlender.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<GenreReadDto>> GetAllGenres()
+        public async Task<IEnumerable<GenreReadDto>> GetAllGenresAsync()
         {
             var genres = await _context.Genres!.AsNoTracking()
                 .Select(g => new GenreReadDto
@@ -27,7 +27,7 @@ namespace BandBlender.Services
             return genres;
         }
 
-        public async Task<GenreReadDto> GetGenreById(Guid id)
+        public async Task<GenreReadDto> GetGenreByIdAsync(Guid id)
         {
             var genre = await _context.Genres!.AsNoTracking()
                 .Where(g => g.GenreId == id)
@@ -41,7 +41,7 @@ namespace BandBlender.Services
             return genre!;
         }
 
-        public async Task<Guid> CreateGenre(GenreCreateDto genreCreateDto)
+        public async Task<Guid> CreateGenreAsync(GenreCreateDto genreCreateDto)
         {
             var genre = new Genre
             {
@@ -54,7 +54,7 @@ namespace BandBlender.Services
             return genre.GenreId;
         }
 
-        public async Task UpdateGenre(Guid id, GenreUpdateDto genreUpdateDto)
+        public async Task UpdateGenreAsync(Guid id, GenreUpdateDto genreUpdateDto)
         {
             var genre = await _context.Genres!.FindAsync(id);
             if (genre != null)
@@ -66,7 +66,7 @@ namespace BandBlender.Services
             }
         }
 
-        public async Task DeleteGenre(Guid id)
+        public async Task DeleteGenreAsync(Guid id)
         {
             var genre = await _context.Genres!.FindAsync(id);
             if (genre != null)

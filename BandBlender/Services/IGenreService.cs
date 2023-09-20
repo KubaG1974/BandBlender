@@ -5,10 +5,10 @@ namespace BandBlender.Services
 {
     public interface IGenreService
     {
-        Task<IEnumerable<GenreReadDto>> GetAllGenres();
-        Task<GenreReadDto> GetGenreById(Guid id);
-        Task<Guid> CreateGenre(GenreCreateDto genreCreateDto);
-        Task UpdateGenre(Guid id, GenreUpdateDto genreUpdateDto);
-        Task DeleteGenre(Guid id);
+        Task<IEnumerable<GenreReadDto>> GetAllGenresAsync();
+        Task<GenreReadDto> GetGenreByIdAsync(Guid id);
+        Task<Guid> CreateGenreAsync(GenreCreateDto genreCreateDto);
+        Task UpdateGenreAsync(Guid id, GenreUpdateDto genreUpdateDto);
+        Task DeleteGenreAsync(Guid id);
     }
 }
