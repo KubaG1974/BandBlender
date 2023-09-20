@@ -76,11 +76,9 @@ namespace BandBlender.Migrations
 
             modelBuilder.Entity("BandBlender.Models.Genre", b =>
                 {
-                    b.Property<int>("GenreId")
+                    b.Property<Guid>("GenreId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GenreId"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -88,6 +86,26 @@ namespace BandBlender.Migrations
                     b.HasKey("GenreId");
 
                     b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("BandBlender.Models.Instrument", b =>
+                {
+                    b.Property<Guid>("InstrumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Category")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("InstrumentName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("InstrumentId");
+
+                    b.ToTable("Instruments");
                 });
 
             modelBuilder.Entity("BandBlender.Models.Musician", b =>
