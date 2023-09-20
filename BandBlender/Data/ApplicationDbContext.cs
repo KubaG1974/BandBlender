@@ -14,5 +14,6 @@ namespace BandBlender.Data
         public DbSet<Band>? Bands { get; set; }
         public DbSet<Musician>? Musicians { get; set; }
         public DbSet<Genre>? Genres { get; set; }
+        public DbSet<Instrument>? Instruments { get; set; }
     }
 }
